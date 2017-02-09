@@ -1,12 +1,16 @@
 package base;
 
-/**
- * Created by fjruiz on 3/02/17.
- */
 public class Principal {
-    //TODO hacer que escritorLector implemente runnable y esas cosas :D
     public static void main(String[] args) {
-        EscritorLector miEL=new EscritorLector("prueba");
-        miEL.escribe();
+        EscritorLector miEL=new EscritorLector(new Integer[20]);
+
+        Escritor miEscritor=new Escritor(miEL);
+        Lector miLector=new Lector(miEL);
+
+        Thread hiloEscritor=new Thread(miEscritor);
+        Thread hiloLector=new Thread(miLector);
+
+        hiloEscritor.start();
+        hiloLector.start();
     }
 }
