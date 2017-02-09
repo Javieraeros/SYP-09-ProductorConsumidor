@@ -3,16 +3,16 @@ package base;
 /**
  * Created by fjruiz on 3/02/17.
  */
-public class EscritorLector {
+public class Contenedor {
     private boolean avisoDespertar;
-    private Integer[] cadena;
+    private Integer[] bolsa;
 
-    public EscritorLector(Integer[] cadena){
-        this.cadena=cadena;
+    public Contenedor(Integer[] bolsa){
+        this.bolsa = bolsa;
         avisoDespertar=false;
     }
     public int length(){
-        return cadena.length;
+        return bolsa.length;
     }
 
     public synchronized void hazEsperar(){
@@ -36,8 +36,8 @@ public class EscritorLector {
     }
 
     public void escribe(int index){
-        cadena[index]=(int) (Math.random()*9);
-        System.out.println("El hilo escritor ha escrito en el indice "+index+" con valor: "+cadena[index]);
+        bolsa[index]=(int) (Math.random()*9);
+        System.out.println("El hilo escritor ha escrito en el indice "+index+" con valor: "+ bolsa[index]);
         try {
             Thread.sleep((int) (Math.random()*2000));
         } catch (InterruptedException e) {
@@ -48,14 +48,14 @@ public class EscritorLector {
 
     public void lee(int index){
         avisoDespertar=false;
-        while (cadena[index]==null){
+        while (bolsa[index]==null){
             System.out.println("Siestecita caletera");
             this.hazEsperar();
         }
-        if(this.cadena[index]==null){
+        if(this.bolsa[index]==null){
             System.out.println("Soy nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuulooooooooooooooooooooooooooooooooo");
         }else {
-            System.out.println("Índice: "+index+" Valor:"+this.cadena[index]);
+            System.out.println("Índice: "+index+" Valor:"+this.bolsa[index]);
         }
     }
 }

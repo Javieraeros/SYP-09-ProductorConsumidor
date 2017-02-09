@@ -4,9 +4,9 @@ package base;
  * Created by fjruiz on 9/02/17.
  */
 public class Escritor implements Runnable {
-    private EscritorLector el;
+    private Contenedor el;
 
-    public Escritor(EscritorLector el) {
+    public Escritor(Contenedor el) {
         this.el = el;
     }
 
