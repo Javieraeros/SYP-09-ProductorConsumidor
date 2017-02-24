@@ -1,5 +1,9 @@
 package filosofos;
 
+import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Practica Filosofos
  En una mesa redonda hay N filósofos sentados. También hay N palillos para comer arroz,
@@ -22,6 +26,15 @@ package filosofos;
  */
 public class PrincipalFilosofos {
     public static void main(String[] args) {
+        ArrayList<Lock> miArray=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            miArray.add(new ReentrantLock(true));
+        }
+        for(int i=0;i<10;i++) {
+            Filosofo miFilosofo = new Filosofo("Filósofo Fulanito"+i, i, miArray);
+            Thread miHilo=new Thread(miFilosofo);
+            miHilo.start();
+        }
 
     }
 }
