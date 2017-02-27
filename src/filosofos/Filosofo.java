@@ -25,24 +25,25 @@ public class Filosofo implements Runnable{
         this.listaLocks = listaLocks;
     }
 
-    public void filosofoPiensa(){
-        System.out.println(nombre+" está pensando");
-        listaLocks.get(posicionIzquierda).unlock();
-        listaLocks.get(posicionDerecha).unlock();
-        palilloIzquierda=palilloDerecha=false;
 
-    }
     public void filosofoCome(){
         System.out.println(nombre+" intenta comer");
         try {
             while(!palilloDerecha && !palilloIzquierda) {
-                palilloDerecha=listaLocks.get(posicionIzquierda).
-                        tryLock(1000, TimeUnit.MILLISECONDS);
+                palilloDerecha=listaLocks.get(posicionDerecha).
+                        tryLock(1000,TimeUnit.MILLISECONDS);
                 if(palilloDerecha){
-                    palilloIzquierda=listaLocks.get(posicionDerecha).
+                    palilloIzquierda=listaLocks.get(posicionIzquierda).
                             tryLock(1000,TimeUnit.MILLISECONDS);
                     if(!palilloIzquierda){
-                        listaLocks.get(posicionIzquierda).unlock();
+                        listaLocks.get(posicionDerecha).unlock();
+                        /*
+                         *La siguiente linea de código, aunque parezca innecesaria evita un error de
+                         * IllegalMonitorStateException.
+                         * Esta excepción se produce cuando uno de los filósofos deja de comer e intenta soltar uno
+                         * de los palillos, mientras que otro filósofo ya lo ha cogido para comer
+                         */
+                        palilloDerecha=false;
                     }
                 }
                 if(!palilloIzquierda || !palilloDerecha){
@@ -54,7 +55,10 @@ public class Filosofo implements Runnable{
             System.out.println(nombre+" comiendo");
 
             Thread.sleep((long) (Math.random()*3000));
-            System.out.println(nombre+" ha terminado");
+            System.out.println(nombre+" ha terminado y está pensando");
+            listaLocks.get(posicionIzquierda).unlock();
+            listaLocks.get(posicionDerecha).unlock();
+            palilloIzquierda=palilloDerecha=false;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -66,7 +70,6 @@ public class Filosofo implements Runnable{
             while (true) {
                 Thread.sleep((long) (Math.random() * 10000));
                 filosofoCome();
-                filosofoPiensa();
             }
 
         } catch (InterruptedException e) {

@@ -27,11 +27,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PrincipalFilosofos {
     public static void main(String[] args) {
         ArrayList<Lock> miArray=new ArrayList<>();
-        for(int i=0;i<10;i++){
+        int tamanio=10;
+        for(int i=0;i<tamanio;i++){
             miArray.add(new ReentrantLock(true));
         }
-        for(int i=0;i<10;i++) {
-            Filosofo miFilosofo = new Filosofo("Filósofo Fulanito"+i, i, miArray);
+        for(int i=0;i<tamanio;i++) {
+            Filosofo miFilosofo = new Filosofo("Filósofo Fulanito "+i, i, miArray);
             Thread miHilo=new Thread(miFilosofo);
             miHilo.start();
         }
