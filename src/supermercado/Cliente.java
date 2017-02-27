@@ -31,9 +31,10 @@ public class Cliente implements Runnable {
         this.pago = pago;
     }
 
-    public void comprar(){
+    //Si no pongo synchronized no va bien :/
+    public synchronized void comprar(){
         try {
-            sleep(compra);
+            Thread.sleep(compra);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

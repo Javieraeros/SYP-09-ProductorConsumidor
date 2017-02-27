@@ -50,7 +50,7 @@ public class Cola{
 
     }
 
-    public void atiende(){
+    public synchronized void atiende(){
         while(tamanioActual!=0) {
             try {
                 Thread.sleep(this.colita.get(0).getPago());
@@ -69,15 +69,6 @@ public class Cola{
         return maximo;
     }
 
-    public int compareTo(Cola c){
-        int resultado=0;
-        if(this.tamanioActual<c.tamanioActual){
-            resultado=-1;
-        }else if(this.tamanioActual>c.tamanioActual){
-            resultado=1;
-        }
-        return resultado;
-    }
 
     public long tiempoParado(){
         long tiempo=0;
@@ -86,9 +77,9 @@ public class Cola{
         }
         //Tenemos que contabilizar el tiempo que el cajero ha estado parado, desde
         //el último cliente hasta el fin de la jornada laboral (malditos empresarios)
-        if(tiemposInicio.size()>tiemposFin.size()){
+        /*if(tiemposInicio.size()>tiemposFin.size()){
             tiempo+=System.currentTimeMillis()-tiemposInicio.get(tiemposInicio.size()-1);
-        }
+        }*/
 
         return tiempo;
     }

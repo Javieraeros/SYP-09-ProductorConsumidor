@@ -2,9 +2,11 @@ package supermercado;
 
 public class Cajero implements Runnable {
     private Cola cola;
+    private long finJornada;
 
-    public Cajero(){
+    public Cajero(long tiempo){
         cola=new Cola();
+        this.finJornada=System.currentTimeMillis()+tiempo;
     }
 
     public Cola getCola() {
@@ -17,7 +19,7 @@ public class Cajero implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (System.currentTimeMillis()<finJornada) {
             cola.atiende();
         }
     }

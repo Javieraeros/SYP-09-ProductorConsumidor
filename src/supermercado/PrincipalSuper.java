@@ -35,7 +35,7 @@ public class PrincipalSuper {
 
         Scanner teclado=new Scanner(System.in);
         int clientesMinuto,cajerosTotales;
-        long tiempoMinutos=300;
+        long tiempoMinutos=3000;
         ArrayList<Cliente> clientes=new ArrayList<>();
         ArrayList<Cola> colas=new ArrayList<>();
         ArrayList<Cajero> cajeros=new ArrayList<>();
@@ -49,25 +49,25 @@ public class PrincipalSuper {
         cajerosTotales=teclado.nextInt();
 
         for(int i=0;i<cajerosTotales;i++){
-            Cajero miCajero=new Cajero();
+            Cajero miCajero=new Cajero(tiempoMinutos);
             cajeros.add(miCajero);
             colas.add(miCajero.getCola());
             Thread hiloCajero=new Thread(miCajero);
             hiloCajero.start();
         }
 
-        for(int i=0;i<tiempoMinutos*clientesMinuto;i++){
+        for(int i=0;i<tiempoMinutos/10*clientesMinuto;i++){
             long tiempoCompra=(long) (Math.random()*550+50);
             Cliente miCliente=new Cliente(tiempoCompra,colas);
             clientes.add(miCliente);
             Thread hiloCliente=new Thread(miCliente);
             hilosClientes.add(hiloCliente);
         }
-        for(int i=0;i<tiempoMinutos*clientesMinuto;i++){
+        for(int i=0;i<tiempoMinutos/10*clientesMinuto;i++){
             hilosClientes.get(i).start();
         }
         try {
-            Thread.sleep(tiempoMinutos+6000);
+            Thread.sleep(tiempoMinutos*3);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
