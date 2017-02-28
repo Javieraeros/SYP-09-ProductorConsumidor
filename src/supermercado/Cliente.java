@@ -47,14 +47,14 @@ public class Cliente implements Runnable {
         int tcmp=0;
         //indice cola menos poblada
         int icmp=0;
-        for(int i=0;i<colas.size();i++){
-            if(i==0){
-                tcmp=colas.get(i).getTamanio();
-                icmp=i;
-            }else{
-                if(tcmp>colas.get(i).getTamanio()){
-                    tcmp=colas.get(i).getTamanio();
-                    icmp=i;
+        for (int i = 0; i < colas.size(); i++) {
+            if (i == 0) {
+                tcmp = colas.get(i).getTamanio();
+                icmp = i;
+            } else {
+                if (tcmp > colas.get(i).getTamanio()) {
+                    tcmp = colas.get(i).getTamanio();
+                    icmp = i;
                 }
             }
         }

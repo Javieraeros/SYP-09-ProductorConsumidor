@@ -9,13 +9,14 @@ import java.util.ArrayList;
 
 public class Cola{
     private ArrayList<Cliente> colita;
-    private int maximo,tamanioActual;
+    private int maximo,tamanioActual,totalClientes;
     private ArrayList<Long> tiemposInicio,tiemposFin;
 
     public Cola(){
         colita=new ArrayList<>();
         tamanioActual=0;
         maximo=0;
+        totalClientes=0;
         tiemposFin=new ArrayList<>();
         tiemposInicio=new ArrayList<>();
         tiemposInicio.add(System.currentTimeMillis());
@@ -31,6 +32,7 @@ public class Cola{
             maximo=colita.size();
         }
         tamanioActual++;
+        totalClientes++;
     }
 
     public synchronized void delete(){
@@ -46,11 +48,12 @@ public class Cola{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
 
     }
 
-    public synchronized void atiende(){
+    public void atiende(){
         while(tamanioActual!=0) {
             try {
                 Thread.sleep(this.colita.get(0).getPago());
@@ -69,6 +72,7 @@ public class Cola{
         return maximo;
     }
 
+    public int getTotal() {return totalClientes;}
 
     public long tiempoParado(){
         long tiempo=0;
@@ -77,9 +81,9 @@ public class Cola{
         }
         //Tenemos que contabilizar el tiempo que el cajero ha estado parado, desde
         //el último cliente hasta el fin de la jornada laboral (malditos empresarios)
-        /*if(tiemposInicio.size()>tiemposFin.size()){
+        if(tiemposInicio.size()>tiemposFin.size()){
             tiempo+=System.currentTimeMillis()-tiemposInicio.get(tiemposInicio.size()-1);
-        }*/
+        }
 
         return tiempo;
     }

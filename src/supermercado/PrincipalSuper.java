@@ -28,7 +28,7 @@ LA simulación abarcará 5 horas y al final nos dará un informe indicando
 Para acelerar la simulación, cada minuto real durará 10ms en nuestro modelo.
 */
 
-
+//TODO Documentar
 public class PrincipalSuper {
     public static void main(String[] args) {
         //region Inicializaciones
@@ -49,7 +49,7 @@ public class PrincipalSuper {
         cajerosTotales=teclado.nextInt();
 
         for(int i=0;i<cajerosTotales;i++){
-            Cajero miCajero=new Cajero(tiempoMinutos);
+            Cajero miCajero=new Cajero(tiempoMinutos,i);
             cajeros.add(miCajero);
             colas.add(miCajero.getCola());
             Thread hiloCajero=new Thread(miCajero);
@@ -67,16 +67,20 @@ public class PrincipalSuper {
             hilosClientes.get(i).start();
         }
         try {
-            Thread.sleep(tiempoMinutos*3);
+            Thread.sleep(tiempoMinutos);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        int clientesTotales=0;
         for(int i=0;i<colas.size();i++){
             System.out.print("El cajero "+i+" ha estado: ");
             System.out.println(colas.get(i).tiempoParado()+"ms parado");
             System.out.print("El número de clientes máximos de la cola "+i);
             System.out.println(" ha sido "+colas.get(i).getMaximo());
+            System.out.println("Clientes totales de la cola "+i+" ha sido "+colas.get(i).getTotal());
+            clientesTotales+=colas.get(i).getTotal();
         }
+        System.out.println("Total clientes: "+clientesTotales);
 
     }
 }
