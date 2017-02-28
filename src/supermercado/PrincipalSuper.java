@@ -65,12 +65,24 @@ public class PrincipalSuper {
         }
         for(int i=0;i<tiempoMinutos/10*clientesMinuto;i++){
             hilosClientes.get(i).start();
+
+            /*
+            La idea de este temporizador es simular que cada minuto entran X clientes
+             */
+            if(i%clientesMinuto==(clientesMinuto-1)){
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        try {
-            Thread.sleep(tiempoMinutos);
+        //Este tiempo sirve para asegurarnos de que todos los clientes han pasado por caja
+        /*try {
+            Thread.sleep(tiempoMinutos-2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         int clientesTotales=0;
         for(int i=0;i<colas.size();i++){
             System.out.print("El cajero "+i+" ha estado: ");
